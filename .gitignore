@@ -28,3 +28,6 @@ Homestead.json
 .env.production
 .phpactor.json
 auth.json
+/.idea/php-test-framework.xml
+/.idea/OSD-Filtering-test.iml
+/.idea/php.xml

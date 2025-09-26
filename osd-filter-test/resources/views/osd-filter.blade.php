@@ -13,213 +13,17 @@
     <title>test osd filtering plugin</title>
 
     <!-- Global stylesheets -->
-    <link type="text/css" rel="stylesheet" href="{{asset('lib/style.css')}}" />
+    <link type="text/css" rel="stylesheet" href="{{asset('css/style.css')}}" />
     <!-- /global stylesheets -->
     <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
     <!-- Core JS files -->
-    <script type="text/javascript" src="{{asset('assets/js/core/libraries/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/js/jquery.min.js')}}"></script>
     <!-- /core JS files -->
 
     <script>if (window.module) module = window.module;</script>
 
     <script>
     </script>
-    <style>
-        @media print {
-            .noprint {
-                display: none;
-            }
-            .toprint {
-                display: block;
-            }
-            html, body {
-                margin: 0;
-                padding: 0;
-                background: #FFF;
-                font-size: 9.5pt;
-            }
-
-        }
-        @font-face {
-            font-family: "irSans";
-            src: url('{{ asset("assets/content/fonts/farsi/IRANSansWeb(FaNum)_Bold.ttf") }}');
-            src: local( "?" ), url('{{ asset("assets/content/fonts/farsi/IRANSansWeb(FaNum)_Bold.ttf") }}')format( "truetype" );
-        }
-        ul{
-            list-style: none outside none;
-            padding-left: 0;
-            margin: 0;
-        }
-        .d-flex{
-            display: flex;
-        }
-
-        .viewer-sidebar{
-            direction:ltr !important;
-            background-color: white;
-            padding:15px;
-        }
-        .filter-icon {
-            display: inline-block;
-            width: 15px;
-            height: 15px;
-            background-image: url('{{ asset("assets/images/icon/filter-icon.png") }}');
-            background-size: cover;
-        }
-        .icon-text {
-            display: flex; /* فعال‌سازی Flexbox */
-            align-items: center; /* تنظیم عمودی آیکون و متن */
-            gap: 8px; /* فاصله بین آیکون و متن */
-            font-family: "irSans";
-            margin-top:30px
-        }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 40px;
-            height: 20px;
-            margin-right:5px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            -webkit-transition: .4s;
-            transition: .4s;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 14px;
-            width: 14px;
-            left: 4px;
-            bottom: 3px;
-            background-color: white;
-            -webkit-transition: .4s;
-            transition: .4s;
-        }
-
-        input:checked + .slider {
-            background-color: #6FDDD2;
-        }
-
-        input:focus + .slider {
-            box-shadow: 0 0 1px #6FDDD2;
-        }
-
-        input:checked + .slider:before {
-            -webkit-transform: translateX(14px);
-            -ms-transform: translateX(14px);
-            transform: translateX(17px);
-        }
-
-        /* Rounded sliders */
-        .slider.round {
-            border-radius: 34px;
-        }
-
-        .slider.round:before {
-            border-radius: 50%;
-        }
-        .control-panel {
-            max-width: 400px;
-            margin-top: 10px;
-            font-family: Arial, sans-serif;
-        }
-
-        .control-item {
-            margin-bottom: 10px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 10px;
-            color: #333;
-        }
-
-        .range-container {
-            position: relative;
-            width: 100%;
-        }
-
-        input[type="range"] {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 5px;
-            border-radius: 5px;
-            background: linear-gradient(to right, #4caf50 50%, #ccc 50%);
-            outline: none;
-            margin: 0;
-            padding: 0;
-            transition: background 0.3s ease-in-out;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 15px;
-            height: 15px;
-            background: #6FDDD2;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background 0.3s ease-in-out;
-            border: 2px solid #fff;
-        }
-
-        input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            background: #6FDDD2;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid #fff;
-        }
-
-        .value-bubble {
-            opacity: 0;
-            visibility: hidden;
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #6FDDD2;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 12px;
-            font-size: 8px;
-            white-space: nowrap;
-            pointer-events: none;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        /* نمایش حباب هنگام Hover یا Focus */
-        .range-container input[type='range']:hover + .value-bubble,
-        .range-container input[type='range']:focus + .value-bubble {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Button styling (optional) */
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-    </style>
 </head>
 <body>
 <!-- Page container -->
@@ -685,6 +489,11 @@
                 },
                 loadMode: sync ? 'sync' : 'async'
             });
+
+            for ( var i = 0; i < viewer.world.getItemCount(); i++ ) {
+                viewer.world.getItemAt(i).tilesMatrix={};
+                viewer.world.getItemAt(i)._needsDraw = true;
+            }
         }
 
         viewer.gestureSettingsMouse.clickToZoom = false;
